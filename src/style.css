@@ -212,7 +212,7 @@ body {
 }
 
 .nominees-table .filler {
-  height: 10rem;
+  height: 12rem;
   text-align: center;
   padding: 15px;
 }
@@ -242,7 +242,7 @@ body {
 @media screen and (max-width: 375px) {  
   
   .nominees-table .filler {
-    height: 15rem;
+    height: 18rem;
   }
 }
 
