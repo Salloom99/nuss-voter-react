@@ -8,6 +8,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { Component } from "react";
 
+function MenuBackButton() {
+  return (
+    <div className="menu__btn">
+      <div className="arrow1"></div>
+      <div className="bar2"></div>
+      <div className="arrow2"></div>
+    </div>
+  );
+}
+
 function MenuButton(props) {
   function handleExpand() {
     props.clicked();
@@ -23,16 +33,12 @@ function MenuButton(props) {
 }
 
 function MenuBanner(props) {
-  function handleClick() {
-    props.clicked();
-  }
+  const { btn, unit } = props;
 
   return (
     <div className="menu__banner">
-      <MenuButton clicked={handleClick} />
-      <span className="title title--right">
-        كلية الهندسة الميكانيكية والكهربائية
-      </span>
+      {btn}
+      <span className="title title--right">{unit}</span>
     </div>
   );
 }
@@ -75,10 +81,24 @@ function MenuList(props) {
   );
 }
 
-class Menu extends Component {
+export function SimlpleMenu(props) {
+  function handleClick() {
+    console.log("back to main menu");
+  }
+
+  return (
+    <div className="menu">
+      <MenuBanner
+        unit={props.unit}
+        btn={<MenuBackButton clicked={handleClick} />}
+      />
+    </div>
+  );
+}
+
+class ExpandedMenu extends Component {
   constructor(props) {
     super(props);
-    // this.handleClick = this.handleClick.bind(this);
     this.state = {
       expanded: false,
     };
@@ -86,18 +106,22 @@ class Menu extends Component {
 
   handleClick = () => {
     this.setState({ expanded: !this.state.expanded });
-  }
+  };
 
   render() {
     const { expanded } = this.state;
+    const { unit } = this.props;
 
     return (
       <div className="menu">
-        <MenuBanner clicked={this.handleClick} />
+        <MenuBanner
+          unit={unit}
+          btn={<MenuButton clicked={this.handleClick} />}
+        />
         <MenuList expanded={expanded} />
       </div>
     );
   }
 }
 
-export default Menu;
+export default ExpandedMenu;
