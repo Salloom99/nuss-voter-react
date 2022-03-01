@@ -74,7 +74,7 @@ class NomineesManager extends Component {
   }
 
   addNominee(name) {
-    const { nominees } = this.state;
+    const nominees = [...this.state.nominees];
     const lastId = nominees.at(-1).id;
     nominees.push(
       <Nominee
@@ -106,7 +106,7 @@ class NomineesManager extends Component {
   };
 
   render() {
-    const { nominees } = this.state;
+    const { nominees, inputName } = this.state;
 
     return (
       <div className="nominees-manager">
@@ -116,7 +116,7 @@ class NomineesManager extends Component {
             type="text"
             placeholder="أدخل اسما لإضافته"
             onChange={this.handleInputChange}
-            value={this.state.inputName}
+            value={inputName}
           />
           <FontAwesomeIcon
             icon={faCirclePlus}

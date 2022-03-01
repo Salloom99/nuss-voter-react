@@ -1,6 +1,7 @@
-import ExpandedMenu, { SimlpleMenu } from "./components/dashboard/menu";
+import { ExpandedMenu, SimlpleMenu } from "./components/menu/menu";
 import NomineesTable from "./components/dashboard/nomineeTable";
 import NomineesManager from "./components/nominees manager/nomineesManager";
+import LoginCard from "./components/login/login";
 
 function Nominees(props) {
   return (
@@ -39,9 +40,21 @@ function Dashboard(props) {
   );
 }
 
+function Login() {
+  return (
+    <div className="container-full-height container-flex">
+      <section className="card card--login">
+        <LoginCard />
+      </section>
+      <div className="snackbar-stack"></div>
+    </div>
+  );
+}
+
 function App() {
   // return <Dashboard unit={'كلية الهندسة الميكانيكية والكهربائية'}/>;
-  return <Nominees unit={'كلية الهندسة الميكانيكية والكهربائية'} />;
+  // return <Nominees unit={'كلية الهندسة الميكانيكية والكهربائية'} />;
+  return <Login />;
 }
 
 export default App;
