@@ -58,13 +58,13 @@ body {
   position: relative;
 }
 
-.card--login {
+.card--small {
   width: 70vw;
   display: grid;
   padding: 30vw 3rem 3rem;
 }
 
-.card--dashboard {
+.card--full {
   box-sizing: border-box;
   margin: 1rem;
   width: 95vw;
@@ -379,7 +379,7 @@ select:focus, input:focus {
     font-size: 2.5rem;
   }
 
-  .card--login {
+  .card--small {
     width: 150vh;
     padding: 5vh 2rem 5vh 5rem;
     grid-template-columns: 50% 50%;

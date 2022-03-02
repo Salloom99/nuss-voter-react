@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import nusslogo from "../../images/nuss_logo.png";
+import { departments, unitsInDepartment } from "../../services/unitsService";
 
 const Logo = () => {
   return (
@@ -35,7 +36,7 @@ const PasswordInput = (props) => {
   );
 };
 
-const Select = ({ options, id, onChange }) => {
+const Select = ({ options, id, label, onChange }) => {
   const handleChange = (event) => {
     onChange(event);
   };
@@ -49,36 +50,73 @@ const Select = ({ options, id, onChange }) => {
         defaultValue={0}
       >
         <option value="0" disabled>
-          {options[0]}
+          {label}
         </option>
-        <option value="1">{options[1]}</option>
-        <option value="2">{options[2]}</option>
-        <option value="3">{options[3]}</option>
+        {options.map( option => <option key={option.id} value={option.id}>{option.name}</option>)}
       </select>
     </div>
   );
 };
 
 class LoginForm extends Component {
-  state = {
-    department: "",
-    unit: "",
-    password: "",
+  constructor(){
+    super();
+
+    this.state = {
+      account: {
+        department: '0',
+        unit: '0',
+        password: "",
+      },
+      errors: {}
+    };
+
+  }
+  
+
+  validate = () => {
+    const errors = {};
+    const { account } = this.state;
+
+    if (account.unit === '0')
+      errors.unit = "Unit is required.";
+
+    if (account.password === "")
+      errors.password = "Password is required.";
+
+    return Object.keys(errors).length === 0 ? {} : errors;
   };
 
   handleChange = ({ currentTarget: input }) => {
     const { name, value } = input;
-    this.setState({ [name]: value });
+    const account = {...this.state.account}
+    account[name] = value;
+    this.setState({ account });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors });
+    if (Object.keys(errors).length) {
+      console.log("Submitted with errors", errors);
+      return;
+    };
+
+
     // Call the server
-    this.setState({ password: "" });
-    console.log("Submitted with", this.state);
+    const account = {...this.state.account}
+    console.log("Submitted with", account);
+
+
+    // Reset password
+    account.password = "";
+    this.setState({ account });
   };
 
   render() {
+    const { account } = this.state; 
     return (
       <div className="form">
         <span className="title">{"انتخابات الهيئة الطلابية"}</span>
@@ -86,21 +124,18 @@ class LoginForm extends Component {
           <form onSubmit={this.handleSubmit}>
             <Select
               id={"department"}
+              label={"الفرع"}
               onChange={this.handleChange}
-              options={["الفرع", "دمشق", "تشرين", "حلب"]}
+              options={departments}
             />
             <Select
               id={"unit"}
+              label={"الوحدة"}
               onChange={this.handleChange}
-              options={[
-                "الوحدة",
-                "كلية الهندسة المعلوماتية",
-                "كلية الحقوق",
-                "كلية الهندسة الميكانيكية والكهربائية",
-              ]}
+              options={account.department !== '0' ? unitsInDepartment(account.department): []}
             />
             <PasswordInput
-              value={this.state.password}
+              value={this.state.account.password}
               onChange={this.handleChange}
             />
             <button className="button control clickable">دخول</button>

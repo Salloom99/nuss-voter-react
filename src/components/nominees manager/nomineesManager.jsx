@@ -73,6 +73,21 @@ class NomineesManager extends Component {
     };
   }
 
+
+  validateName = (name) => {
+    const trimmedName = name.trim();
+
+    if (!trimmedName)
+      throw Error('Empty field');
+    
+    const { nominees } = this.state;
+    const exists = nominees.some(nominee => nominee.name === trimmedName);
+    if (exists)
+      throw Error('Existed name');
+
+    return trimmedName
+  }
+
   addNominee = (name) => {
     const nominees = [...this.state.nominees];
     nominees.unshift({ name, count: 0 });
@@ -89,7 +104,15 @@ class NomineesManager extends Component {
   };
 
   handleNomineeAdd = () => {
-    this.addNominee(this.state.inputName);
+    let name = this.state.inputName;
+    try {
+      name = this.validateName(name);
+      this.addNominee(name);
+      
+    } catch (error) {
+      // this.context(error.message);
+      console.log(error.message);
+    }
     this.setState({ inputName: "" });
   };
 
