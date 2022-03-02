@@ -34,7 +34,7 @@ class Nominee extends Component {
 
   handleNameChange = () => {
     // this.setState({name: this.nameText.current.innerText})
-    console.log('changing');
+    console.log("changing");
   };
 
   render() {
@@ -73,37 +73,34 @@ class NomineesManager extends Component {
     };
   }
 
-  addNominee(name) {
+  addNominee = (name) => {
     const nominees = [...this.state.nominees];
-    const lastId = nominees.at(-1).id;
-    nominees.push(
-      <Nominee
-        id={lastId + 1}
-        name={name}
-        onEdit={this.handleNomineeEdit}
-        onDelete={this.handleNomineeDelete}
-      />
-    );
+    nominees.unshift({ name, count: 0 });
     this.setState({ nominees });
   }
 
-  handleNomineeEdit = () => {
+  handleNomineeEdit = (name) => {
     // var name = event.target.parentElement.querySelector(".name");
   };
 
-  handleNomineeDelete = (id) => {
-    const nominees = this.state.nominees.filter((n) => n.id !== id);
+  handleNomineeDelete = (name) => {
+    const nominees = this.state.nominees.filter((n) => n.name !== name);
     this.setState({ nominees });
   };
 
   handleNomineeAdd = () => {
-    console.log("add " + this.state.inputName);
+    this.addNominee(this.state.inputName);
     this.setState({ inputName: "" });
   };
 
-  handleInputChange = (event) => {
-    this.setState({ inputName: event.target.value });
+  handleInputChange = ({ currentTarget: input }) => {
+    this.setState({ inputName: input.value });
   };
+
+  handleEnterPress = (event) => {
+    if (event.key === 'Enter')
+      this.handleNomineeAdd();
+  }
 
   render() {
     const { nominees, inputName } = this.state;
@@ -116,6 +113,7 @@ class NomineesManager extends Component {
             type="text"
             placeholder="أدخل اسما لإضافته"
             onChange={this.handleInputChange}
+            onKeyPress={ event => this.handleEnterPress(event)}
             value={inputName}
           />
           <FontAwesomeIcon
@@ -129,11 +127,11 @@ class NomineesManager extends Component {
             const { id, name } = nominee;
             return (
               <Nominee
-                key={id}
+                key={name}
                 id={id}
                 name={name}
-                onEdit={() => this.handleNomineeEdit(id)}
-                onDelete={() => this.handleNomineeDelete(id)}
+                onEdit={() => this.handleNomineeEdit(name)}
+                onDelete={() => this.handleNomineeDelete(name)}
               />
             );
           })}

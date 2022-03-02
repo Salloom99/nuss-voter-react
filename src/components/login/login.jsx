@@ -16,24 +16,38 @@ const Logo = () => {
   );
 };
 
-class PasswordInput extends Component {
-  render() {
-    return (
-      <input
-        className="input full-width control"
-        type="password"
-        name=""
-        id="password"
-        placeholder="كلمة المرور"
-      />
-    );
-  }
-}
+const PasswordInput = (props) => {
+  const handleChange = (event) => {
+    // console.log(event.currentTarget.value);
+    props.onChange(event);
+  };
 
-const Select = ({ options, id }) => {
+  return (
+    <input
+      value={props.value}
+      onChange={handleChange}
+      className="input full-width control"
+      type="password"
+      name="password"
+      id="password"
+      placeholder="كلمة المرور"
+    />
+  );
+};
+
+const Select = ({ options, id, onChange }) => {
+  const handleChange = (event) => {
+    onChange(event);
+  };
   return (
     <div className="select full-width control">
-      <select className="full-width" name="" id={id} defaultValue={0}>
+      <select
+        className="full-width clickable"
+        name={id}
+        id={id}
+        onChange={handleChange}
+        defaultValue={0}
+      >
         <option value="0" disabled>
           {options[0]}
         </option>
@@ -46,13 +60,51 @@ const Select = ({ options, id }) => {
 };
 
 class LoginForm extends Component {
+  state = {
+    department: "",
+    unit: "",
+    password: "",
+  };
+
+  handleChange = ({ currentTarget: input }) => {
+    const { name, value } = input;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    // Call the server
+    this.setState({ password: "" });
+    console.log("Submitted with", this.state);
+  };
+
   render() {
-      const { title, action, children} = this.props;
     return (
       <div className="form">
-        <span className="title">{title}</span>
+        <span className="title">{"انتخابات الهيئة الطلابية"}</span>
         <div className="form-group">
-          <form action={action}>{children}</form>
+          <form onSubmit={this.handleSubmit}>
+            <Select
+              id={"department"}
+              onChange={this.handleChange}
+              options={["الفرع", "دمشق", "تشرين", "حلب"]}
+            />
+            <Select
+              id={"unit"}
+              onChange={this.handleChange}
+              options={[
+                "الوحدة",
+                "كلية الهندسة المعلوماتية",
+                "كلية الحقوق",
+                "كلية الهندسة الميكانيكية والكهربائية",
+              ]}
+            />
+            <PasswordInput
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            <button className="button control clickable">دخول</button>
+          </form>
         </div>
       </div>
     );
@@ -64,23 +116,7 @@ class LoginCard extends Component {
     return (
       <>
         <Logo />
-        <LoginForm title={"انتخابات الهيئة الطلابية"} action={"/dashboard"}>
-          <Select
-            id={"department"}
-            options={["الفرع", "دمشق", "تشرين", "حلب"]}
-          />
-          <Select
-            id={"unit"}
-            options={[
-              "الوحدة",
-              "كلية الهندسة المعلوماتية",
-              "كلية الحقوق",
-              "كلية الهندسة الميكانيكية والكهربائية",
-            ]}
-          />
-          <PasswordInput />
-          <button className="button control">دخول</button>
-        </LoginForm>
+        <LoginForm />
       </>
     );
   }

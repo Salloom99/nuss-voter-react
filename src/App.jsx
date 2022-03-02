@@ -1,14 +1,19 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ExpandedMenu, SimlpleMenu } from "./components/menu/menu";
 import NomineesTable from "./components/dashboard/nomineeTable";
 import NomineesManager from "./components/nominees manager/nomineesManager";
 import LoginCard from "./components/login/login";
 
 function Nominees(props) {
+  const navigate = useNavigate();
+  function handleBackClicked() {
+    navigate(-1);
+  }
+
   return (
     <div className="container-flex">
       <section className="card card--dashboard">
-        <SimlpleMenu unit={"مرشحي " + props.unit} />
+        <SimlpleMenu unit={"مرشحي " + props.unit} onBackClicked={handleBackClicked}/>
         <NomineesManager
           nominees={[
             { id: 0, name: "محمد سالم دوماني", votes: 255 },
@@ -17,7 +22,7 @@ function Nominees(props) {
           ]}
         />
       </section>
-      <div className="snackbar-stack"></div>
+
     </div>
   );
 }
@@ -36,7 +41,6 @@ function Dashboard(props) {
           totalVotes={271}
         />
       </section>
-      <div className="snackbar-stack"></div>
     </div>
   );
 }
@@ -47,13 +51,13 @@ function Login() {
       <section className="card card--login">
         <LoginCard />
       </section>
-      <div className="snackbar-stack"></div>
-    </div>
+     </div>
   );
 }
 
 function App() {
   return (
+    <>
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route
@@ -65,6 +69,8 @@ function App() {
         element={<Nominees unit={"كلية الهندسة الميكانيكية والكهربائية"} />}
       />
     </Routes>
+     <div className="snackbar-stack"></div>
+  </>
   );
 }
 

@@ -1,3 +1,5 @@
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCirclePause,
@@ -6,7 +8,6 @@ import {
   faClipboard,
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { Component } from "react";
 
 const MenuBackButton = ({ clicked }) => {
   function handleClick() {
@@ -23,12 +24,14 @@ const MenuBackButton = ({ clicked }) => {
 };
 
 function MenuButton(props) {
+  const menuBtn = React.createRef();
+
   function handleExpand() {
     props.clicked();
-    document.querySelector(".menu__btn").classList.toggle("change");
+    menuBtn.current.classList.toggle("change");
   }
   return (
-    <div className="menu__btn" onClick={handleExpand}>
+    <div className="menu__btn" ref={menuBtn} onClick={handleExpand}>
       <div className="bar1"></div>
       <div className="bar2"></div>
       <div className="bar3"></div>
@@ -49,9 +52,9 @@ const MenuItem = ({ text, icon, href }) => {
   return (
     <li>
       <FontAwesomeIcon icon={icon} style={{ width: "2.5rem" }} />
-      <a className="menu__item" href={href}>
+      <Link className="menu__item" to={href}>
         {text}
-      </a>
+      </Link>
     </li>
   );
 };
@@ -83,7 +86,7 @@ function MenuList(props) {
 
 function SimlpleMenu(props) {
   function handleClick() {
-    document.location.href = '/dashboard';
+    props.onBackClicked();
   }
 
   return (
