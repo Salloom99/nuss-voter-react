@@ -8,9 +8,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { Component } from "react";
 
-const MenuBackButton = () => {
+const MenuBackButton = ({ clicked }) => {
+  function handleClick() {
+    clicked();
+  }
+
   return (
-    <div className="menu__btn">
+    <div className="menu__btn" onClick={handleClick}>
       <div className="arrow1"></div>
       <div className="bar2"></div>
       <div className="arrow2"></div>
@@ -64,13 +68,13 @@ function MenuList(props) {
         <MenuItem
           text={"إدارة المرشحين"}
           icon={faAddressBook}
-          href={"/nominees.html"}
+          href={"/nominees"}
         />
         <MenuItem text={"القائمة الانتخابية"} icon={faClipboard} href={"#"} />
         <MenuItem
           text={"تسجيل الخروج"}
           icon={faArrowRightFromBracket}
-          href={"/login.html"}
+          href={"/login"}
         />
       </ul>
     </div>
@@ -79,7 +83,7 @@ function MenuList(props) {
 
 function SimlpleMenu(props) {
   function handleClick() {
-    console.log("back to main menu");
+    document.location.href = '/dashboard';
   }
 
   return (

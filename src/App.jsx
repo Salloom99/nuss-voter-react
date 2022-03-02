@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import { ExpandedMenu, SimlpleMenu } from "./components/menu/menu";
 import NomineesTable from "./components/dashboard/nomineeTable";
 import NomineesManager from "./components/nominees manager/nomineesManager";
@@ -52,9 +53,19 @@ function Login() {
 }
 
 function App() {
-  // return <Dashboard unit={'كلية الهندسة الميكانيكية والكهربائية'}/>;
-  // return <Nominees unit={'كلية الهندسة الميكانيكية والكهربائية'} />;
-  return <Login />;
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/dashboard"
+        element={<Dashboard unit={"كلية الهندسة الميكانيكية والكهربائية"} />}
+      />
+      <Route
+        path="/nominees"
+        element={<Nominees unit={"كلية الهندسة الميكانيكية والكهربائية"} />}
+      />
+    </Routes>
+  );
 }
 
 export default App;

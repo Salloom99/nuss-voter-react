@@ -64,7 +64,7 @@ class LoginCard extends Component {
     return (
       <>
         <Logo />
-        <LoginForm title={"انتخابات الهيئة الطلابية"} action={"/dashboard.html"}>
+        <LoginForm title={"انتخابات الهيئة الطلابية"} action={"/dashboard"}>
           <Select
             id={"department"}
             options={["الفرع", "دمشق", "تشرين", "حلب"]}
