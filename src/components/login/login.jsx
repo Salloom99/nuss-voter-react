@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
 import nusslogo from "../../images/nuss_logo.png";
-import { departments, unitsInDepartment } from "../../services/unitsService";
 
 const Logo = () => {
   return (
@@ -36,7 +36,7 @@ const PasswordInput = (props) => {
   );
 };
 
-const Select = ({ options, id, label, onChange }) => {
+const Select = ({ value, options, id, label, onChange }) => {
   const handleChange = (event) => {
     onChange(event);
   };
@@ -47,49 +47,71 @@ const Select = ({ options, id, label, onChange }) => {
         name={id}
         id={id}
         onChange={handleChange}
-        defaultValue={0}
+        // defaultValue={0}
+        value={value}
       >
         <option value="0" disabled>
           {label}
         </option>
-        {options.map( option => <option key={option.id} value={option.id}>{option.name}</option>)}
+        {options.map((option) => (
+          <option key={option.pk} value={option.pk}>
+            {option.name}
+          </option>
+        ))}
       </select>
     </div>
   );
 };
 
 class LoginForm extends Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
+      departments: [],
+      units: [],
       account: {
-        department: '0',
-        unit: '0',
+        department: "0",
+        unit: "0",
         password: "",
       },
-      errors: {}
+      errors: {},
     };
-
   }
-  
+
+  async componentDidMount() {
+    const { data: departments } = await axios.get(
+      "http://localhost:8000/departments/"
+    );
+    this.setState({ departments });
+  }
 
   validate = () => {
     const errors = {};
     const { account } = this.state;
 
-    if (account.unit === '0')
-      errors.unit = "Unit is required.";
+    if (account.unit === "0") errors.unit = "Unit is required.";
 
-    if (account.password === "")
-      errors.password = "Password is required.";
+    if (account.password === "") errors.password = "Password is required.";
 
     return Object.keys(errors).length === 0 ? {} : errors;
   };
 
+  handleDepartmentChange = async ({ currentTarget: input }) => {
+    const { value } = input;
+    const account = { ...this.state.account };
+    account.department = value;
+    account.unit = '0';
+    const { data: units } = await axios.get("http://localhost:8000/units/", {
+      params: { department: value },
+    });
+
+    this.setState({ units, account });
+  };
+
   handleChange = ({ currentTarget: input }) => {
     const { name, value } = input;
-    const account = {...this.state.account}
+    const account = { ...this.state.account };
     account[name] = value;
     this.setState({ account });
   };
@@ -102,13 +124,11 @@ class LoginForm extends Component {
     if (Object.keys(errors).length) {
       console.log("Submitted with errors", errors);
       return;
-    };
-
+    }
 
     // Call the server
-    const account = {...this.state.account}
+    const account = { ...this.state.account };
     console.log("Submitted with", account);
-
 
     // Reset password
     account.password = "";
@@ -116,7 +136,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { account } = this.state; 
+    const { account, departments, units } = this.state;
     return (
       <div className="form">
         <span className="title">{"انتخابات الهيئة الطلابية"}</span>
@@ -125,14 +145,16 @@ class LoginForm extends Component {
             <Select
               id={"department"}
               label={"الفرع"}
-              onChange={this.handleChange}
+              onChange={this.handleDepartmentChange}
               options={departments}
+              value={account.department}
             />
             <Select
               id={"unit"}
               label={"الوحدة"}
               onChange={this.handleChange}
-              options={account.department !== '0' ? unitsInDepartment(account.department): []}
+              options={units}
+              value={account.unit}
             />
             <PasswordInput
               value={this.state.account.password}

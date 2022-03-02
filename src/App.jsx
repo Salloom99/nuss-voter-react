@@ -5,7 +5,7 @@ import NomineesTable from "./components/dashboard/nomineeTable";
 import NomineesManager from "./components/nominees manager/nomineesManager";
 import LoginCard from "./components/login/login";
 import SnackBarStack from "./components/common/snackbar";
-import { nominees } from './services/nomineesService';
+import { nominees } from "./services/nomineesService";
 
 function Nominees(props) {
   const navigate = useNavigate();
@@ -20,9 +20,7 @@ function Nominees(props) {
           unit={"مرشحي " + props.unit}
           onBackClicked={handleBackClicked}
         />
-        <NomineesManager
-          nominees={nominees}
-        />
+        <NomineesManager nominees={nominees} />
       </section>
     </div>
   );
@@ -33,10 +31,7 @@ function Dashboard(props) {
     <div className="container-flex">
       <section className="card card--full">
         <ExpandedMenu unit={props.unit} />
-        <NomineesTable
-          nominees={nominees}
-          totalVotes={271}
-        />
+        <NomineesTable nominees={nominees} totalVotes={271} />
       </section>
     </div>
   );
@@ -53,18 +48,13 @@ function Login() {
 }
 
 function App() {
+  const unitName = 'كلية الهندسة المعلوماتية';
   return (
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={<Dashboard unit={"كلية الهندسة الميكانيكية والكهربائية"} />}
-        />
-        <Route
-          path="/nominees"
-          element={<Nominees unit={"كلية الهندسة الميكانيكية والكهربائية"} />}
-        />
+        <Route path="/dashboard" element={<Dashboard unit={unitName} />} />
+        <Route path="/nominees" element={<Nominees unit={unitName} />} />
       </Routes>
       <SnackBarStack />
     </>
