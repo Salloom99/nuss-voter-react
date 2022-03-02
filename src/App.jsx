@@ -5,6 +5,7 @@ import NomineesTable from "./components/dashboard/nomineeTable";
 import NomineesManager from "./components/nominees manager/nomineesManager";
 import LoginCard from "./components/login/login";
 import SnackBarStack from "./components/common/snackbar";
+import { nominees } from './services/nomineesService';
 
 function Nominees(props) {
   const navigate = useNavigate();
@@ -20,11 +21,7 @@ function Nominees(props) {
           onBackClicked={handleBackClicked}
         />
         <NomineesManager
-          nominees={[
-            { id: 0, name: "محمد سالم دوماني", votes: 255 },
-            { id: 1, name: "محمد جسور حاج رضوان", votes: 245 },
-            { id: 2, name: "سامر القمحة", votes: 230 },
-          ]}
+          nominees={nominees}
         />
       </section>
     </div>
@@ -37,11 +34,7 @@ function Dashboard(props) {
       <section className="card card--full">
         <ExpandedMenu unit={props.unit} />
         <NomineesTable
-          nominees={[
-            { name: "محمد سالم دوماني", votes: 255 },
-            { name: "محمد جسور حاج رضوان", votes: 245 },
-            { name: "سامر القمحة", votes: 230 },
-          ]}
+          nominees={nominees}
           totalVotes={271}
         />
       </section>
