@@ -36,25 +36,16 @@ const PasswordInput = (props) => {
   );
 };
 
-const Select = ({ value, options, id, label, onChange }) => {
-  const handleChange = (event) => {
-    onChange(event);
-  };
+const Select = ({ pk, options, id, label, ...rest }) => {
+  // value, onChange as rest
   return (
     <div className="select full-width control">
-      <select
-        className="full-width clickable"
-        name={id}
-        id={id}
-        onChange={handleChange}
-        // defaultValue={0}
-        value={value}
-      >
+      <select className="full-width clickable" name={id} id={id} {...rest}>
         <option value="0" disabled>
           {label}
         </option>
         {options.map((option) => (
-          <option key={option.pk} value={option.pk}>
+          <option key={option[pk]} value={option[pk]}>
             {option.name}
           </option>
         ))}
@@ -101,7 +92,7 @@ class LoginForm extends Component {
     const { value } = input;
     const account = { ...this.state.account };
     account.department = value;
-    account.unit = '0';
+    account.unit = "0";
     const { data: units } = await axios.get("http://localhost:8000/units/", {
       params: { department: value },
     });
@@ -148,6 +139,7 @@ class LoginForm extends Component {
               onChange={this.handleDepartmentChange}
               options={departments}
               value={account.department}
+              pk={"nickname"}
             />
             <Select
               id={"unit"}
@@ -155,6 +147,7 @@ class LoginForm extends Component {
               onChange={this.handleChange}
               options={units}
               value={account.unit}
+              pk={"nickname"}
             />
             <PasswordInput
               value={this.state.account.password}
