@@ -14,7 +14,6 @@ class Nominee extends Component {
       editing: false,
       name: this.props.name,
     };
-
     this.nameText = React.createRef();
   }
 
@@ -40,7 +39,7 @@ class Nominee extends Component {
   render() {
     const { name, editing } = this.state;
     return (
-      <li className="nominee">
+      <li className="nominee" ref={this.self}>
         <span
           className="name"
           onInput={this.handleNameChange}

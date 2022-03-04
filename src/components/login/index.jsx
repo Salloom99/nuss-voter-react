@@ -167,4 +167,15 @@ class LoginCard extends Component {
   }
 }
 
-export default LoginCard;
+
+function Login() {
+  return (
+    <div className="container-full-height container-flex">
+      <section className="card card--small">
+        <LoginCard />
+      </section>
+    </div>
+  );
+}
+
+export default Login;
