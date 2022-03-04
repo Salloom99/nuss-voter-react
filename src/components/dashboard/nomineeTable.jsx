@@ -50,14 +50,15 @@ class NomineesTable extends Component {
       );
     });
 
-    return nominees.length > 2 ? (
-      <React.Fragment>
+    if (nominees.length > 2)
+      return (
+        <React.Fragment>
         <TotalVotesRow totalVotes={totalVotes} />
         {nomineesRows}
       </React.Fragment>
-    ) : (
-      <TableFiller />
-    );
+      );
+      
+    return <TableFiller />;
   }
 
   render() {
