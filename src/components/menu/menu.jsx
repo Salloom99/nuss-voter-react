@@ -59,13 +59,29 @@ const MenuItem = ({ text, icon, href }) => {
   );
 };
 
+function State({ value }) {
+  function getState(state) {
+    if (state === 'A')
+      return 'العملية جارية';
+    else if (state === 'S')
+      return 'العملية متوقفة';
+    else
+      return 'العملية منتهية';
+  }
+  
+  return (
+    <span className="state">{getState(value)}</span>
+  );
+}
+
 function MenuList(props) {
-  const { expanded } = props;
+  const { state, expanded } = props;
   const className = expanded ? "" : "menu__hidden";
   return (
+
     <div className={`menu__list ${className}`}>
-      <span className="state">العملية جارية</span>
       <ul>
+        <State value={state} />
         <MenuItem text={"إيقاف العملية"} icon={faCirclePause} href={"#"} />
         <MenuItem text={"إنهاء العملية"} icon={faCircleStop} href={"#"} />
         <MenuItem
@@ -116,10 +132,10 @@ class ExpandedMenu extends Component {
 
     return (
       <div className="menu">
-        <MenuBanner unit={unit}>
+        <MenuBanner unit={unit.name}>
           <MenuButton clicked={this.handleClick} />
         </MenuBanner>
-        <MenuList expanded={expanded} />
+        <MenuList state={unit.state} expanded={expanded} />
       </div>
     );
   }

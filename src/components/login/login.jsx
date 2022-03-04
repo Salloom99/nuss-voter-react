@@ -17,16 +17,11 @@ const Logo = () => {
   );
 };
 
-const PasswordInput = (props) => {
-  const handleChange = (event) => {
-    // console.log(event.currentTarget.value);
-    props.onChange(event);
-  };
-
+const PasswordInput = ({ value, onChange}) => {
   return (
     <input
-      value={props.value}
-      onChange={handleChange}
+      value={value}
+      onChange={onChange}
       className="input full-width control"
       type="password"
       name="password"

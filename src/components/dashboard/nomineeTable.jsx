@@ -35,22 +35,17 @@ function NomineeRow(props) {
 }
 
 class NomineesTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { nominees: props.nominees };
-  }
 
   getNomineesRows() {
-    const { nominees } = this.state;
-    const { totalVotes } = this.props;
+    const { nominees, totalVotes } = this.props;
 
     const nomineesRows = nominees.map((nominee, index) => {
       return (
         <NomineeRow
-          key={nominee.name}
+          key={nominee.id}
           index={index + 1}
           name={nominee.name}
-          votes={nominee.votes}
+          votes={nominee.votes_count}
         />
       );
     });
