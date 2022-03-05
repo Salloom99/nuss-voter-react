@@ -3,6 +3,7 @@ import NomineesTable from "../../components/dashboard/nomineeTable";
 import { ExpandedMenu } from "../../components/common/menu";
 import http from "../../services/httpService";
 import withUnitContext from '../../hoc/withUnitContext';
+import config from '../../config.json';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -25,16 +26,16 @@ class Dashboard extends Component {
       const unitId = this.props.context.unit.pk;
 
       const { data: unitData } = await http.get(
-        `http://localhost:8000/units/${unitId}`
+        `${config.url}/units/${unitId}`
       );
   
       const { data: totalVotesData } = await http.get(
-        `http://localhost:8000/voters/total-in/${unitId}`
+        `${config.url}/voters/total-in/${unitId}`
       );
       const totalVotes = totalVotesData['total_votes'];
   
       const { data: nominees } = await http.get(
-        `http://localhost:8000/nominees/?ordering=-votes_count&unit=${unitId}`
+        `${config.url}/nominees/?ordering=-votes_count&unit=${unitId}`
       );
       
       const unit = { ...this.state.unit };
