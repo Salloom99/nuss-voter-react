@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NomineesTable from "../../components/dashboard/nomineeTable";
 import { ExpandedMenu } from "../../components/common/menu";
-import axios from "axios";
+import http from "../../services/httpService";
 import withUnitContext from '../../hoc/withUnitContext';
 
 class Dashboard extends Component {
@@ -24,16 +24,16 @@ class Dashboard extends Component {
       // const unitId = this.props.location.state.unit;
       const unitId = this.props.context.unit.pk;
 
-      const { data: unitData } = await axios.get(
+      const { data: unitData } = await http.get(
         `http://localhost:8000/units/${unitId}`
       );
   
-      const { data: totalVotesData } = await axios.get(
+      const { data: totalVotesData } = await http.get(
         `http://localhost:8000/voters/total-in/${unitId}`
       );
       const totalVotes = totalVotesData['total_votes'];
   
-      const { data: nominees } = await axios.get(
+      const { data: nominees } = await http.get(
         `http://localhost:8000/nominees/?ordering=-votes_count&unit=${unitId}`
       );
       

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import http from "../../services/httpService";
 import nusslogo from "../../assets/images/nuss_logo.png";
 import withNavigate from "../../hoc/withNavigate";
 import withUnitContext from "../../hoc/withUnitContext";
@@ -68,7 +68,7 @@ class LoginForm extends Component {
   }
 
   async componentDidMount() {
-    const { data: departments } = await axios.get(
+    const { data: departments } = await http.get(
       "http://localhost:8000/departments/"
     );
     this.setState({ departments });
@@ -90,7 +90,7 @@ class LoginForm extends Component {
     const account = { ...this.state.account };
     account.department = value;
     account.unit = "0";
-    const { data: units } = await axios.get("http://localhost:8000/units/", {
+    const { data: units } = await http.get("http://localhost:8000/units/", {
       params: { department: value },
     });
 

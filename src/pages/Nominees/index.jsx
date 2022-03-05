@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NomineesManager from "../../components/nominees/nomineesManager";
 import { SimlpleMenu } from "../../components/common/menu";
 import { nominees } from "../../services/nomineesService";
-// import { useNavigate } from "react-router-dom";
 
 class Nominees extends Component {
   constructor(props) {
