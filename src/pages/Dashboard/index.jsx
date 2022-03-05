@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import NomineesTable from "./nomineeTable";
-import { ExpandedMenu } from "../menu";
+import NomineesTable from "../../components/dashboard/nomineeTable";
+import { ExpandedMenu } from "../../components/common/menu";
 import axios from "axios";
-import withUnitContext from './../../hoc/withUnitContext';
-
+import withUnitContext from '../../hoc/withUnitContext';
 
 class Dashboard extends Component {
     constructor(props) {

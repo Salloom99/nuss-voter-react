@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import SnackBarStack from "./components/common/snackbar";
-import Login from './components/login';
-import Dashboard from './components/dashboard';
-import Nominees from './components/nominees';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Nominees from './pages/Nominees';
 import UnitContext from './context/unitContext';
 
 function App() {

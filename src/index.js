@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import "./normalize.css";
-import "./style.css";
+import "./assets/styles/normalize.css";
+import "./assets/styles/style.css";
 
 
 

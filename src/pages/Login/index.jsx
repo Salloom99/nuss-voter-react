@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import nusslogo from "../../images/nuss_logo.png";
-import withNavigate from "./../../hoc/withNavigate";
-import withUnitContext from "./../../hoc/withUnitContext";
+import nusslogo from "../../assets/images/nuss_logo.png";
+import withNavigate from "../../hoc/withNavigate";
+import withUnitContext from "../../hoc/withUnitContext";
 
 const Logo = () => {
   return (
