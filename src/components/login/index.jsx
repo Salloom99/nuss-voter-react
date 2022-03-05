@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import nusslogo from "../../images/nuss_logo.png";
+import withNavigate from "./../../hoc/withNavigate";
+import withUnitContext from "./../../hoc/withUnitContext";
 
 const Logo = () => {
   return (
@@ -17,7 +19,7 @@ const Logo = () => {
   );
 };
 
-const PasswordInput = ({ value, onChange}) => {
+const PasswordInput = ({ value, onChange }) => {
   return (
     <input
       value={value}
@@ -119,6 +121,13 @@ class LoginForm extends Component {
     // Reset password
     account.password = "";
     this.setState({ account });
+
+    const unitContext = this.props.context;
+    unitContext.setUnit({pk: account.unit})
+
+    this.props.navigate("/dashboard", {
+      replace: true,
+    });
   };
 
   render() {
@@ -156,17 +165,16 @@ class LoginForm extends Component {
   }
 }
 
-class LoginCard extends Component {
-  render() {
-    return (
-      <>
-        <Logo />
-        <LoginForm />
-      </>
-    );
-  }
-}
+function LoginCard() {
+  const LogInForm = withUnitContext(withNavigate(LoginForm));
 
+  return (
+    <>
+      <Logo />
+      <LogInForm />
+    </>
+  );
+}
 
 function Login() {
   return (

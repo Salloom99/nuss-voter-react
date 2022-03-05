@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import NomineesTable from "./nomineeTable";
-import { ExpandedMenu } from "../menu/menu";
+import { ExpandedMenu } from "../menu";
 import axios from "axios";
+import withUnitContext from './../../hoc/withUnitContext';
 
 
 class Dashboard extends Component {
     constructor(props) {
       super(props);
+
+      // const unitContext = this.props.context;
+
       this.state = {
         unit: {
           name: "",
@@ -18,17 +22,20 @@ class Dashboard extends Component {
     }
   
     async componentDidMount() {
+      // const unitId = this.props.location.state.unit;
+      const unitId = this.props.context.unit.pk;
+
       const { data: unitData } = await axios.get(
-        `http://localhost:8000/units/${this.props.unit}`
+        `http://localhost:8000/units/${unitId}`
       );
   
       const { data: totalVotesData } = await axios.get(
-        `http://localhost:8000/voters/total-in/${'dam_ite'}`
+        `http://localhost:8000/voters/total-in/${unitId}`
       );
       const totalVotes = totalVotesData['total_votes'];
   
       const { data: nominees } = await axios.get(
-        "http://localhost:8000/nominees/?ordering=-votes_count&unit=dam_ite"
+        `http://localhost:8000/nominees/?ordering=-votes_count&unit=${unitId}`
       );
       
       const unit = { ...this.state.unit };
@@ -50,4 +57,4 @@ class Dashboard extends Component {
     }
   }
 
-export default Dashboard;
+export default withUnitContext(Dashboard);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NomineesManager from "./nomineesManager";
-import { SimlpleMenu } from "../menu/menu";
+import { SimlpleMenu } from "../menu";
 import { nominees } from "../../services/nomineesService";
 // import { useNavigate } from "react-router-dom";
 
