@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Nominees from "./pages/Nominees";
 import UnitContext from "./context/unitContext";
 import NomineeContext from "./context/nomineeContext";
+import NotFound from './pages/Notfound/index';
 
 function App() {
   const [unit, setUnit] = useState({ pk: "", name: "" });
@@ -18,7 +19,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/nominees" element={<Nominees />} />
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="/not-found" element={<NotFound />} />
+          <Route index element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
         <SnackBarStack />
       </NomineeContext.Provider>
