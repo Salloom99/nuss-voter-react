@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import SnackBarStack from "./components/common/snackbar";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -18,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/nominees" element={<Nominees />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
         <SnackBarStack />
       </NomineeContext.Provider>
