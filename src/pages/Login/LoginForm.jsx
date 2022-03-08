@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { getAllDepartments } from "../../services/departmentService";
 import { getUnitsIn, getUnit } from "../../services/unitService";
-import { PasswordInput } from "./PasswordInput";
-import { Select } from "./Select";
+import { PasswordInput } from './../../components/common/passwordInput';
+import { Select } from './../../components/common/select';
 
 export class LoginForm extends Component {
   constructor() {

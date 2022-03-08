@@ -1,7 +1,7 @@
 import React from 'react';
 import FullContainer from './../../layouts/containers/fullContainer';
 import SmallCard from '../../layouts/cards/smallCard';
-import { Logo } from './../Login/Logo';
+import { Logo } from '../../components/common/logo';
 
 
 function NotFound() {  
