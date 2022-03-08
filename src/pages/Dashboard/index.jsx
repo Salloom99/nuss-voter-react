@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import NomineesTable from "../../components/dashboard/nomineeTable";
 import { ExpandedMenu } from "../../components/common/menu";
-import http from "../../services/httpService";
+import { getUnit } from "../../services/unitService";
+import { getNomineesIn } from "../../services/nomineeService";
+import { getVotersCountIn } from "../../services/voterService";
 import withUnitContext from '../../hoc/withUnitContext';
-import config from '../../config.json';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -25,18 +26,12 @@ class Dashboard extends Component {
       // const unitId = this.props.location.state.unit;
       const unitId = this.props.context.unit.pk;
 
-      const { data: unitData } = await http.get(
-        `${config.url}/units/${unitId}`
-      );
+      const { data: unitData } = await getUnit(unitId);
   
-      const { data: totalVotesData } = await http.get(
-        `${config.url}/voters/total-in/${unitId}`
-      );
+      const { data: totalVotesData } = await getVotersCountIn(unitId);
       const totalVotes = totalVotesData['total_votes'];
-  
-      const { data: nominees } = await http.get(
-        `${config.url}/nominees/?ordering=-votes_count&unit=${unitId}`
-      );
+      
+      const { data: nominees } = await getNomineesIn(unitId);
       
       const unit = { ...this.state.unit };
       unit.name = unitData.name;
