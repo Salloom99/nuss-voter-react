@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getAllDepartments } from "../../services/departmentService";
-import { getUnitsIn } from "../../services/unitService";
+import { getUnitsIn, getUnit } from "../../services/unitService";
 import { PasswordInput } from "./PasswordInput";
 import { Select } from "./Select";
 
@@ -29,10 +29,8 @@ export class LoginForm extends Component {
     const errors = {};
     const { account } = this.state;
 
-    if (account.unit === "0")
-      errors.unit = "Unit is required.";
-    if (account.password === "")
-      errors.password = "Password is required.";
+    if (account.unit === "0") errors.unit = "Unit is required.";
+    if (account.password === "") errors.password = "Password is required.";
 
     return Object.keys(errors).length === 0 ? {} : errors;
   };
@@ -54,7 +52,7 @@ export class LoginForm extends Component {
     this.setState({ account });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     // Validate submitted values
@@ -74,8 +72,9 @@ export class LoginForm extends Component {
     this.setState({ account });
 
     // Set unit globally
+    const { data: unitData } = await getUnit(account.unit);
     const unitContext = this.props.context;
-    unitContext.setUnit({ pk: account.unit });
+    unitContext.setUnit({ pk: account.unit, name: unitData.name });
 
     // Go to Dashboard
     this.props.navigate("/dashboard", {
@@ -96,17 +95,20 @@ export class LoginForm extends Component {
               onChange={this.handleDepartmentChange}
               options={departments}
               value={account.department}
-              pk={"nickname"} />
+              pk={"nickname"}
+            />
             <Select
               id={"unit"}
               label={"الوحدة"}
               onChange={this.handleChange}
               options={units}
               value={account.unit}
-              pk={"nickname"} />
+              pk={"nickname"}
+            />
             <PasswordInput
               value={this.state.account.password}
-              onChange={this.handleChange} />
+              onChange={this.handleChange}
+            />
             <button className="button control clickable">دخول</button>
           </form>
         </div>

@@ -152,8 +152,8 @@ class NomineesManager extends Component {
                 key={name}
                 id={id}
                 name={name}
-                onEdit={() => this.handleNomineeEdit(name)}
-                onDelete={() => this.handleNomineeDelete(name)}
+                onEdit={() => this.handleNomineeEdit(id)}
+                onDelete={() => this.handleNomineeDelete(id)}
               />
             );
           })}

@@ -1,37 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import NomineesManager from "../../components/nominees/nomineesManager";
 import { SimlpleMenu } from "../../components/common/menu";
-import { nominees } from "../../services/fakeNomineeService";
-import FullCard from '../../layouts/cards/fullCard';
-import FlexContainer from './../../layouts/containers/flexContainer';
+import { getNomineesIn } from "../../services/nomineeService";
+import FullCard from "../../layouts/cards/fullCard";
+import FlexContainer from "./../../layouts/containers/flexContainer";
+import withUnitContext from "./../../hoc/withUnitContext";
 
 class Nominees extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      nominees: [],
       toAdd: [],
       toUpdate: [],
-      toDelete: []
+      toDelete: [],
     };
+  }
+
+  async componentDidMount() {
+    const { pk: unitId } = this.props.context.unit;
+    const { data: nominees } = await getNomineesIn(unitId);
+
+    this.setState({ nominees });
   }
 
   handleBackClicked = () => {
     console.log(this.state);
   };
 
-  render() { 
+  render() {
+    const { name } = this.props.context.unit;
+
     return (
       <FlexContainer>
-          <FullCard>
+        <FullCard>
           <SimlpleMenu
-            unit={"مرشحي " + this.props.unit}
+            unit={"مرشحي " + name}
             onBackClicked={this.handleBackClicked}
           />
-          <NomineesManager nominees={nominees} />
+          <NomineesManager nominees={this.state.nominees} />
         </FullCard>
       </FlexContainer>
     );
   }
 }
 
-export default Nominees;
+export default withUnitContext(Nominees);
