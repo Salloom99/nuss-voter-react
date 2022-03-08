@@ -4,7 +4,7 @@ import { ExpandedMenu } from "../../components/common/menu";
 import { getUnit } from "../../services/unitService";
 import { getNomineesIn } from "../../services/nomineeService";
 import { getVotersCountIn } from "../../services/voterService";
-import withUnitContext from '../../hoc/withUnitContext';
+import withUserContext from '../../hoc/withUnitContext';
 import FlexContainer from './../../layouts/containers/flexContainer';
 import FullCard from './../../layouts/cards/fullCard';
 
@@ -25,11 +25,8 @@ class Dashboard extends Component {
     }
   
     async componentDidMount() {
-      // const unitId = this.props.location.state.unit;
-      const { pk: unitId, name: unitName  } = this.props.context.unit;
+      const { unit: unitId } = this.props.context.user;
       const { data: unitData } = await getUnit(unitId);
-      // unitContext.setUnit()
-      
   
       const { data: totalVotesData } = await getVotersCountIn(unitId);
       const totalVotes = totalVotesData['total_votes'];
@@ -37,7 +34,7 @@ class Dashboard extends Component {
       const { data: nominees } = await getNomineesIn(unitId);
       
       const unit = { ...this.state.unit };
-      unit.name = unitName;
+      unit.name = unitData.name;
       unit.state = unitData.state;
       this.setState({ unit, totalVotes, nominees });
     }
@@ -55,4 +52,4 @@ class Dashboard extends Component {
     }
   }
 
-export default withUnitContext(Dashboard);
+export default withUserContext(Dashboard);

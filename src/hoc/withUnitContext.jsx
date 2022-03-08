@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import UnitContext from './../context/unitContext';
+import UserContext from '../context/userContext';
 
-function withUnitContext(Component) {
+function withUserContext(Component) {
   return (props) => {
-    const context = useContext(UnitContext);
+    const context = useContext(UserContext);
     return <Component context={context} {...props} />;
   };
 }
 
-export default withUnitContext;
+export default withUserContext;

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { getAllDepartments } from "../../services/departmentService";
-import { getUnitsIn, getUnit } from "../../services/unitService";
+import { getUnitsIn } from "../../services/unitService";
 import { PasswordInput } from './../../components/common/passwordInput';
 import { Select } from './../../components/common/select';
+import { register } from '../../services/monitorService'
 
 export class LoginForm extends Component {
   constructor() {
@@ -66,20 +67,26 @@ export class LoginForm extends Component {
     // Call the server
     const account = { ...this.state.account };
     console.log("Submitted with", account);
+    try {
+      const { data: tokenData } = await register(account);
+      console.log(tokenData);
 
-    // Reset password
-    account.password = "";
-    this.setState({ account });
-
-    // Set unit globally
-    const { data: unitData } = await getUnit(account.unit);
-    const unitContext = this.props.context;
-    unitContext.setUnit({ pk: account.unit, name: unitData.name });
+      // Set user globally
+      const userContext = this.props.context;
+      userContext.setUser({ ...tokenData, ...account });
 
     // Go to Dashboard
     this.props.navigate("/dashboard", {
       replace: true,
     });
+
+    } catch ({ response }) {
+      console.log(response.data);
+      
+      // Reset password
+      account.password = "";
+      this.setState({ account });
+    }
   };
 
   render() {

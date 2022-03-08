@@ -4,12 +4,14 @@ import { SimlpleMenu } from "../../components/common/menu";
 import { getNomineesIn } from "../../services/nomineeService";
 import FullCard from "../../layouts/cards/fullCard";
 import FlexContainer from "./../../layouts/containers/flexContainer";
-import withUnitContext from "./../../hoc/withUnitContext";
+import withUserContext from "./../../hoc/withUnitContext";
+import { getUnit } from "../../services/unitService";
 
 class Nominees extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      unitName: "",
       nominees: [],
       toAdd: [],
       toUpdate: [],
@@ -18,10 +20,11 @@ class Nominees extends Component {
   }
 
   async componentDidMount() {
-    const { pk: unitId } = this.props.context.unit;
+    const { unit: unitId } = this.props.context.user;
     const { data: nominees } = await getNomineesIn(unitId);
+    const { data: unitData } = await getUnit(unitId);
 
-    this.setState({ nominees });
+    this.setState({ unitName: unitData.name, nominees });
   }
 
   handleBackClicked = () => {
@@ -29,13 +32,11 @@ class Nominees extends Component {
   };
 
   render() {
-    const { name } = this.props.context.unit;
-
     return (
       <FlexContainer>
         <FullCard>
           <SimlpleMenu
-            unit={"مرشحي " + name}
+            unit={"مرشحي " + this.state.unitName}
             onBackClicked={this.handleBackClicked}
           />
           <NomineesManager nominees={this.state.nominees} />
@@ -45,4 +46,4 @@ class Nominees extends Component {
   }
 }
 
-export default withUnitContext(Nominees);
+export default withUserContext(Nominees);
