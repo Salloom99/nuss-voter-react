@@ -5,6 +5,8 @@ import { getUnit } from "../../services/unitService";
 import { getNomineesIn } from "../../services/nomineeService";
 import { getVotersCountIn } from "../../services/voterService";
 import withUnitContext from '../../hoc/withUnitContext';
+import FlexContainer from './../../layouts/containers/flexContainer';
+import FullCard from './../../layouts/cards/fullCard';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -42,12 +44,12 @@ class Dashboard extends Component {
     render() {
       const { unit, totalVotes, nominees } = this.state;
       return (
-        <div className="container-flex">
-          <section className="card card--full">
+        <FlexContainer>
+          <FullCard>
             <ExpandedMenu unit={unit} />
             <NomineesTable unit={unit.name} nominees={nominees} totalVotes={totalVotes} />
-          </section>
-        </div>
+          </FullCard>
+        </FlexContainer>
       );
     }
   }

@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Nominees from "./pages/Nominees";
 import UnitContext from "./context/unitContext";
-import UnitContext from "./context/nomineeContext";
+import NomineeContext from "./context/nomineeContext";
 
 function App() {
   const [unit, setUnit] = useState({ pk: "", name: "" });
