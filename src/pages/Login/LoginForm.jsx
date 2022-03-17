@@ -68,20 +68,25 @@ export class LoginForm extends Component {
     const account = { ...this.state.account };
     console.log("Submitted with", account);
     try {
-      const { data: tokenData } = await register(account);
-      console.log(tokenData);
+      const { data: token } = await register(account);
+      console.log(token);
+      localStorage.setItem('token', token);
 
       // Set user globally
-      const userContext = this.props.context;
-      userContext.setUser({ ...tokenData, ...account });
+      // const userContext = this.props.context;
+      // userContext.setUser({ token, ...account });
 
     // Go to Dashboard
     this.props.navigate("/dashboard", {
       replace: true,
     });
 
-    } catch ({ response }) {
-      console.log(response.data);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        const errors = { ...this.state.errors };
+        errors.password = error.response.data.password;
+        this.setState({ errors });
+      }
       
       // Reset password
       account.password = "";

@@ -12,8 +12,6 @@ class Dashboard extends Component {
     constructor(props) {
       super(props);
 
-      // const unitContext = this.props.context;
-
       this.state = {
         unit: {
           name: "",
@@ -26,13 +24,14 @@ class Dashboard extends Component {
   
     async componentDidMount() {
       const { unit: unitId } = this.props.context.user;
+      console.log(this.props.context);
+
       const { data: unitData } = await getUnit(unitId);
-  
-      const { data: totalVotesData } = await getVotersCountIn(unitId);
-      const totalVotes = totalVotesData['total_votes'];
-      
-      const { data: nominees } = await getNomineesIn(unitId);
-      
+      // const { data: totalVotes } = await getVotersCountIn(unitId);
+      // const { data: nominees } = await getNomineesIn(unitId);
+      const nominees = [];
+      const totalVotes = [];
+      // console.log(nominees);
       const unit = { ...this.state.unit };
       unit.name = unitData.name;
       unit.state = unitData.state;
