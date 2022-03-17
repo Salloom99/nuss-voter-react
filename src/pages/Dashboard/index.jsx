@@ -61,11 +61,11 @@ class Dashboard extends Component {
     return (
       <FlexContainer>
         <FullCard>
-          <ExpandedMenu unit={unit} collapsed={true}>
+          <ExpandedMenu unit={unit}>
             <MenuList>
               <State value={unit.state} />
               {!finished && (
-                <>
+                <React.Fragment>
                   <ButtonItem
                     text={active ? "إيقاف العملية" : "بدأ العملية"}
                     icon={faCirclePause}
@@ -76,7 +76,7 @@ class Dashboard extends Component {
                     icon={faCircleStop}
                     onClick={this.handleStopClick}
                   />
-                </>
+                </React.Fragment>
               )}
               <LinkItem
                 text={"إدارة المرشحين"}

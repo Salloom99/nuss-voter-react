@@ -1,14 +1,10 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MenuBackButton = ({ clicked }) => {
-  function handleClick() {
-    clicked();
-  }
-
+const MenuBackButton = ({ onClick }) => {
   return (
-    <div className="menu__btn" onClick={handleClick}>
+    <div className="menu__btn" onClick={onClick}>
       <div className="arrow1"></div>
       <div className="bar2"></div>
       <div className="arrow2"></div>
@@ -94,38 +90,28 @@ function SimlpleMenu(props) {
   return (
     <div className="menu">
       <MenuBanner unit={props.unit}>
-        <MenuBackButton clicked={handleClick} />
+        <MenuBackButton onClick={handleClick} />
       </MenuBanner>
     </div>
   );
 }
 
-class ExpandedMenu extends Component {
-  state = { collapsed: true };
-  handleClick = () => {
-    this.setState({ collapsed: !this.state.collapsed });
+function ExpandedMenu({ unit, children }) {
+  const [collapsed, setCollapsed] = useState(true);
+
+  const handleClick = () => {
+    setCollapsed(!collapsed);
   };
 
-  render() {
-    const { unit } = this.props;
-    const { collapsed } = this.state;
-
-    return (
-      <div className={collapsed ? "menu menu--collapsed" : "menu"}>
-        <MenuBanner unit={unit.name}>
-          <MenuButton clicked={this.handleClick} />
-        </MenuBanner>
-        {this.props.children}
-      </div>
-    );
-  }
+  return (
+    <div className={collapsed ? "menu menu--collapsed" : "menu"}>
+      <MenuBanner unit={unit.name}>
+        <MenuButton clicked={handleClick} />
+      </MenuBanner>
+      {children}
+    </div>
+  );
 }
 
-export {
-  ExpandedMenu,
-  SimlpleMenu,
-  State,
-  ButtonItem,
-  LinkItem,
-  MenuList,
-};
+
+export { ExpandedMenu, SimlpleMenu, State, ButtonItem, LinkItem, MenuList };
