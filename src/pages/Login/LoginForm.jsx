@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { getAllDepartments } from "../../services/departmentService";
 import { getUnitsIn } from "../../services/unitService";
-import { PasswordInput } from './../../components/common/passwordInput';
-import { Select } from './../../components/common/select';
-import { register } from '../../services/monitorService'
+import { PasswordInput } from "./../../components/common/passwordInput";
+import { Select } from "./../../components/common/select";
+import { register } from "../../services/monitorService";
 
 export class LoginForm extends Component {
   constructor() {
@@ -70,29 +70,50 @@ export class LoginForm extends Component {
     try {
       const { data: token } = await register(account);
       console.log(token);
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
 
-      // Set user globally
-      // const userContext = this.props.context;
-      // userContext.setUser({ token, ...account });
-
-    // Go to Dashboard
-    this.props.navigate("/dashboard", {
-      replace: true,
-    });
-
+      // Go to Dashboard
+      this.props.navigate("/dashboard", {
+        replace: true,
+      });
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const errors = { ...this.state.errors };
         errors.password = error.response.data.password;
         this.setState({ errors });
       }
-      
+
       // Reset password
       account.password = "";
       this.setState({ account });
     }
   };
+
+  departmentSelect = (account, departments) => {
+    return (
+      <Select
+        id={"department"}
+        label={"الفرع"}
+        onChange={this.handleDepartmentChange}
+        options={departments}
+        value={account.department}
+        pk={"nickname"}
+      />
+    );
+  }
+
+  unitSelect = (account, units) => {
+    return (
+      <Select
+        id={"unit"}
+        label={"الوحدة"}
+        onChange={this.handleChange}
+        options={units}
+        value={account.unit}
+        pk={"nickname"}
+      />
+    );
+  }
 
   render() {
     const { account, departments, units } = this.state;
@@ -101,24 +122,10 @@ export class LoginForm extends Component {
         <span className="title">{"انتخابات الهيئة الطلابية"}</span>
         <div className="form-group">
           <form onSubmit={this.handleSubmit}>
-            <Select
-              id={"department"}
-              label={"الفرع"}
-              onChange={this.handleDepartmentChange}
-              options={departments}
-              value={account.department}
-              pk={"nickname"}
-            />
-            <Select
-              id={"unit"}
-              label={"الوحدة"}
-              onChange={this.handleChange}
-              options={units}
-              value={account.unit}
-              pk={"nickname"}
-            />
+            {this.departmentSelect(account, departments)}
+            {this.unitSelect(account, units)}
             <PasswordInput
-              value={this.state.account.password}
+              value={account.password}
               onChange={this.handleChange}
             />
             <button className="button control clickable">دخول</button>

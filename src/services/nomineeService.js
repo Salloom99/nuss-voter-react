@@ -1,11 +1,17 @@
 import http from "./httpService";
 import config from "../config.json";
 
-function getNomineesIn(unit) {
-  return http.get(config.url + "/nominees/", {
-    params: { unit, ordering: "-votes_count" },
-  });
+function getNomineesIn(unit, sort="name") {
+  if (sort === "name")
+    return http.get(config.url + "/nominees/", {
+      params: { unit, ordering: "name" },
+    });
+  else
+    return http.get(config.url + "/nominees/", {
+      params: { unit, ordering: "-votes_count" },
+    });
 }
+
 
 function addNomineeTo(name, unit) {
   return http.post(config.url + "/nominees/", { name, unit });
