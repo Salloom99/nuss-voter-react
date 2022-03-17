@@ -69,18 +69,22 @@ export class LoginForm extends Component {
     console.log("Submitted with", account);
     try {
       const { data: token } = await register(account);
-      console.log(token);
+      // console.log(token);
       localStorage.setItem("token", token);
+      this.props.context.setUser({id: account.unit})
 
       // Go to Dashboard
       this.props.navigate("/dashboard", {
         replace: true,
       });
+
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const errors = { ...this.state.errors };
         errors.password = error.response.data.password;
         this.setState({ errors });
+
+        alert("wrong password");
       }
 
       // Reset password

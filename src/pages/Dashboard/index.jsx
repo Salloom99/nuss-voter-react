@@ -21,6 +21,7 @@ import { getVotersCountIn } from "../../services/voterService";
 import withUserContext from "../../hoc/withUnitContext";
 import FlexContainer from "./../../layouts/containers/flexContainer";
 import FullCard from "./../../layouts/cards/fullCard";
+import withNavigate from './../../hoc/withNavigate';
 
 class Dashboard extends Component {
   state = {
@@ -52,6 +53,11 @@ class Dashboard extends Component {
     await updateUnitState(unit.nickname, unit.state);
     this.setState({ unit });
   };
+
+  handleSignOutClick = () => {
+    localStorage.removeItem('token');
+    this.props.navigate('/login');
+  }
 
   render() {
     const { unit, totalVotes, nominees } = this.state;
@@ -88,10 +94,10 @@ class Dashboard extends Component {
                 icon={faClipboard}
                 href={"/votes"}
               />
-              <LinkItem
+              <ButtonItem
                 text={"تسجيل الخروج"}
                 icon={faArrowRightFromBracket}
-                href={"/login"}
+                onClick={this.handleSignOutClick}
               />
             </MenuList>
           </ExpandedMenu>
@@ -106,4 +112,4 @@ class Dashboard extends Component {
   }
 }
 
-export default withUserContext(Dashboard);
+export default withNavigate(withUserContext(Dashboard));

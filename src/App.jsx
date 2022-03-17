@@ -10,30 +10,28 @@ import SnackBarStack from "./components/common/snackbar";
 
 function App() {
   const token = localStorage.getItem("token");
-  let userId;
+  let userId = null;
 
   if (token) {
     const userDecoded = jwtDecode(token);
     userId = userDecoded.user_id;
   }
 
-  const [user, SetUser] = useState({ id: userId });
+  const [user, setUser] = useState({ id: userId });
 
   console.log(user);
 
   return (
-    <UserContext.Provider value={{ user, SetUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <Routes>
-        <Route path="/login" element={
-        user ? <Navigate to="/dashboard" /> : <Login />
-        } />
+        <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/nominees" element={<Nominees />} />
         <Route path="/not-found" element={<NotFound />} />
         <Route
           index
           element={
-            user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+            user.id ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
           }
         />
         <Route path="*" element={<Navigate to="/not-found" />} />
