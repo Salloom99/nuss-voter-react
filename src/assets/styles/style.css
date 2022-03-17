@@ -154,7 +154,7 @@ body {
   margin: 1.5rem;
 }
 
-.menu__hidden {
+.menu--collapsed .menu__list {
   height: 0;
   /* visibility: hidden; */
 }

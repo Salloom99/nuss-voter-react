@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCirclePause,
-  faCircleStop,
-  faAddressBook,
-  faClipboard,
-  faArrowRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
 
 const MenuBackButton = ({ clicked }) => {
   function handleClick() {
@@ -48,7 +41,7 @@ const MenuBanner = ({ children, unit }) => {
   );
 };
 
-const MenuItem = ({ text, icon, href }) => {
+function LinkItem({ text, icon, href }) {
   return (
     <li>
       <FontAwesomeIcon icon={icon} style={{ width: "2.5rem" }} />
@@ -57,45 +50,38 @@ const MenuItem = ({ text, icon, href }) => {
       </Link>
     </li>
   );
-};
+}
 
-function State({ value }) {
-  function getState(state) {
-    if (state === 'A')
-      return 'العملية جارية';
-    else if (state === 'S')
-      return 'العملية متوقفة';
-    else
-      return 'العملية منتهية';
-  }
-  
+function ButtonItem({ text, icon, onClick }) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    onClick();
+  };
+
   return (
-    <span className="state">{getState(value)}</span>
+    <li>
+      <FontAwesomeIcon icon={icon} style={{ width: "2.5rem" }} />
+      <a className="menu__item" href="/none" onClick={handleClick}>
+        {text}
+      </a>
+    </li>
   );
 }
 
-function MenuList(props) {
-  const { state, expanded } = props;
-  const className = expanded ? "" : "menu__hidden";
-  return (
+function State({ value }) {
+  function getState(state) {
+    if (state === "A") return "العملية جارية";
+    else if (state === "S") return "العملية متوقفة";
+    else return "العملية منتهية";
+  }
 
-    <div className={`menu__list ${className}`}>
-      <ul>
-        <State value={state} />
-        <MenuItem text={"إيقاف العملية"} icon={faCirclePause} href={"#"} />
-        <MenuItem text={"إنهاء العملية"} icon={faCircleStop} href={"#"} />
-        <MenuItem
-          text={"إدارة المرشحين"}
-          icon={faAddressBook}
-          href={"/nominees"}
-        />
-        <MenuItem text={"القائمة الانتخابية"} icon={faClipboard} href={"#"} />
-        <MenuItem
-          text={"تسجيل الخروج"}
-          icon={faArrowRightFromBracket}
-          href={"/login"}
-        />
-      </ul>
+  return <span className="state">{getState(value)}</span>;
+}
+
+function MenuList({ children }) {
+  return (
+    <div className={`menu__list`}>
+      <ul>{children}</ul>
     </div>
   );
 }
@@ -115,30 +101,31 @@ function SimlpleMenu(props) {
 }
 
 class ExpandedMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: false,
-    };
-  }
-
+  state = { collapsed: true };
   handleClick = () => {
-    this.setState({ expanded: !this.state.expanded });
+    this.setState({ collapsed: !this.state.collapsed });
   };
 
   render() {
-    const { expanded } = this.state;
     const { unit } = this.props;
+    const { collapsed } = this.state;
 
     return (
-      <div className="menu">
+      <div className={collapsed ? "menu menu--collapsed" : "menu"}>
         <MenuBanner unit={unit.name}>
           <MenuButton clicked={this.handleClick} />
         </MenuBanner>
-        <MenuList state={unit.state} expanded={expanded} />
+        {this.props.children}
       </div>
     );
   }
 }
 
-export  {ExpandedMenu, SimlpleMenu};
+export {
+  ExpandedMenu,
+  SimlpleMenu,
+  State,
+  ButtonItem,
+  LinkItem,
+  MenuList,
+};

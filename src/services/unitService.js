@@ -11,7 +11,7 @@ function getUnit(unitId) {
 }
 
 function updateUnitState(unitId, state) {
-  return http.put(config.url + "/units/" + unitId, { state });
+  return http.put(config.url + "/units/" + unitId + "/", { state });
 }
 
 export { getUnitsIn, getUnit, updateUnitState };
