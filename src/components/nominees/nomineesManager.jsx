@@ -47,6 +47,13 @@ class NomineesManager extends Component {
 
   handleNomineeDelete = (id) => {
     const nominees = this.state.nominees.filter((n) => n.id !== id);
+    this.props.onDelete(id);
+    this.setState({ nominees });
+  };
+
+  handleNewNomineeDelete = (name) => {
+    const nominees = this.state.nominees.filter((n) => n.name !== name);
+    this.props.onDelete(null, name);
     this.setState({ nominees });
   };
 
@@ -59,6 +66,7 @@ class NomineesManager extends Component {
       // this.context(error.message);
       console.log(error.message);
     }
+    this.props.onAdd(name);
     this.setState({ inputName: "" });
   };
 
@@ -69,6 +77,9 @@ class NomineesManager extends Component {
   nomineesComponents = (nominees) => {
     return nominees.map((nominee) => {
       const { id, name, old } = nominee;
+      const handleDelete = old
+        ? () => this.handleNomineeDelete(id)
+        : () => this.handleNewNomineeDelete(name);
       return (
         <Nominee
           key={name}
@@ -76,7 +87,7 @@ class NomineesManager extends Component {
           name={name}
           old={old}
           // onEdit={() => this.handleNomineeEdit(id)}
-          onDelete={() => this.handleNomineeDelete(id)}
+          onDelete={handleDelete}
         />
       );
     });
