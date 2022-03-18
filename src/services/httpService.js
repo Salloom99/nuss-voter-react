@@ -1,4 +1,5 @@
 import axios from "axios";
+import { notify } from './../components/common/snackbar';
 
 
 axios.interceptors.response.use(null, (error) => {
@@ -9,7 +10,7 @@ axios.interceptors.response.use(null, (error) => {
 
     if (!expectedError) {
     console.log("Logging the error", error);
-    alert("An unexpected error occurred.");
+    notify("حدث خطأ ما غير متوقع!");
   }
   return Promise.reject(error);
 });

@@ -4,6 +4,7 @@ import { getUnitsIn } from "../../services/unitService";
 import { PasswordInput } from "./../../components/common/passwordInput";
 import { Select } from "./../../components/common/select";
 import auth from "../../services/authService";
+import { notify } from './../../components/common/snackbar';
 
 export class LoginForm extends Component {
   constructor() {
@@ -79,7 +80,7 @@ export class LoginForm extends Component {
         errors.password = error.response.data.password;
         this.setState({ errors });
 
-        alert("wrong password");
+        notify("كلمة المرور غير صحيحة");
       }
 
       // Reset password
