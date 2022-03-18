@@ -3,7 +3,7 @@ import { getAllDepartments } from "../../services/departmentService";
 import { getUnitsIn } from "../../services/unitService";
 import { PasswordInput } from "./../../components/common/passwordInput";
 import { Select } from "./../../components/common/select";
-import { register } from "../../services/monitorService";
+import auth from "../../services/authService";
 
 export class LoginForm extends Component {
   constructor() {
@@ -68,16 +68,11 @@ export class LoginForm extends Component {
     const account = { ...this.state.account };
     console.log("Submitted with", account);
     try {
-      const { data: token } = await register(account);
-      // console.log(token);
-      localStorage.setItem("token", token);
-      this.props.context.setUser({id: account.unit})
+      auth.register(account);
+      this.props.context.setUser({ id: account.unit });
 
       // Go to Dashboard
-      this.props.navigate("/dashboard", {
-        replace: true,
-      });
-
+      this.props.navigate("/", { replace: true });
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const errors = { ...this.state.errors };
@@ -104,7 +99,7 @@ export class LoginForm extends Component {
         pk={"nickname"}
       />
     );
-  }
+  };
 
   unitSelect = (account, units) => {
     return (
@@ -117,7 +112,7 @@ export class LoginForm extends Component {
         pk={"nickname"}
       />
     );
-  }
+  };
 
   render() {
     const { account, departments, units } = this.state;

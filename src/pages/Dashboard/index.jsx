@@ -16,6 +16,7 @@ import {
   MenuList,
 } from "../../components/common/menu";
 import { getUnit, updateUnitState } from "../../services/unitService";
+import auth from '../../services/authService';
 import { getNomineesIn } from "../../services/nomineeService";
 import { getVotersCountIn } from "../../services/voterService";
 import withUserContext from "../../hoc/withUnitContext";
@@ -55,7 +56,7 @@ class Dashboard extends Component {
   };
 
   handleSignOutClick = () => {
-    localStorage.removeItem('token');
+    auth.logout();
     this.props.navigate('/login');
   }
 

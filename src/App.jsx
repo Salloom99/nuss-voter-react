@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import UserContext from "./context/userContext";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Nominees from "./pages/Nominees";
 import NotFound from "./pages/Notfound/index";
 import SnackBarStack from "./components/common/snackbar";
+import auth from "./services/authService";
 
 function App() {
-  const token = localStorage.getItem("token");
-  let userId = null;
-
-  if (token) {
-    const userDecoded = jwtDecode(token);
-    userId = userDecoded.user_id;
-  }
-
-  const [user, setUser] = useState({ id: userId });
+  const currentUser = auth.getCurrentUser();
+  const [user, setUser] = useState({
+    id: currentUser ? currentUser.user_id : null,
+  });
 
   console.log(user);
 
