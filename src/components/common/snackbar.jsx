@@ -1,18 +1,24 @@
-import React, { Component } from "react";
-import useAnimatedShow from './../../hooks/useAnimatedShow';
-
+import React, { Component, useEffect } from "react";
+import useAnimatedHideShow from "./../../hooks/useAnimatedHideShow";
 
 export let notify;
 
-
 function SnackBar({ message, poke }) {
-  const hiddenClass = useAnimatedShow(poke, "snackbar--hidden", 4000);
+  const [hiddenClass, handleDelete] = useAnimatedHideShow(
+    "snackbar--hidden",
+    poke
+  );
+
+  useEffect(() => {
+    setTimeout(handleDelete, 4000);
+  }, []);
+
   return (
-    <div className={"snackbar"+ hiddenClass}>
+    <div className={"snackbar" + hiddenClass}>
       <p>{message}</p>
     </div>
   );
-};
+}
 
 class SnackBarStack extends Component {
   state = { snacks: [] };
@@ -29,18 +35,14 @@ class SnackBarStack extends Component {
   };
 
   removeSnack = (id) => {
-    const snacks = this.state.snacks.filter(snack => snack.id !== id)
+    const snacks = this.state.snacks.filter((snack) => snack.id !== id);
     this.setState({ snacks });
-  }
+  };
 
   render() {
-    const snackBars = this.state.snacks.map(({id, message})=> 
-      <SnackBar
-        key={id}
-        message={message}
-        poke={() => this.removeSnack(id)}
-      />
-    );
+    const snackBars = this.state.snacks.map(({ id, message }) => (
+      <SnackBar key={id} message={message} poke={() => this.removeSnack(id)} />
+    ));
     return (
       <div ref={this.props.ref} className="snackbar-stack snackbar--top">
         {snackBars}
@@ -50,4 +52,3 @@ class SnackBarStack extends Component {
 }
 
 export default SnackBarStack;
-

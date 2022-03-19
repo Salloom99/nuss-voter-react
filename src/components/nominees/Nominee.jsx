@@ -5,8 +5,30 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAnimatedHideShow from "../../hooks/useAnimatedHideShow";
 
-export class Nominee extends Component {
+
+export function Nominee({ id, old, name, onDelete }) {
+  const [hiddenClass, handleDelete] = useAnimatedHideShow(
+    "nominee--hidden",
+    () => onDelete(id)
+  );
+  
+  return (
+    <li className={"nominee" + hiddenClass}>
+      <span className="name">{name}</span>
+
+      <FontAwesomeIcon icon={old ? faCheck : faPenToSquare} />
+      <FontAwesomeIcon
+        icon={faTrash}
+        className="clickable"
+        onClick={handleDelete}
+      />
+    </li>
+  );
+}
+
+export class NomineeOld extends Component {
   constructor(props) {
     super(props);
     this.state = {
