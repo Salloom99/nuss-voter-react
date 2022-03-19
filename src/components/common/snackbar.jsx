@@ -1,18 +1,14 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
+import useAnimatedShow from './../../hooks/useAnimatedShow';
+
 
 export let notify;
 
-export function notifies(message) {
-  console.log(message);
-}
 
 function SnackBar({ message, poke }) {
-  useEffect(() => {
-    setTimeout(poke, 3000);
-  }, []);
-
+  const hiddenClass = useAnimatedShow(poke, "snackbar--hidden", 4000);
   return (
-    <div className="snackbar">
+    <div className={"snackbar"+ hiddenClass}>
       <p>{message}</p>
     </div>
   );
@@ -54,3 +50,4 @@ class SnackBarStack extends Component {
 }
 
 export default SnackBarStack;
+

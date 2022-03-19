@@ -513,7 +513,7 @@ select:focus, input:focus {
   font-size: 2rem;
 }
 
-.delete {
+.nominee--hidden {
   margin-top: 0 !important;
   height: 0;
   opacity: 0;
@@ -540,16 +540,19 @@ select:focus, input:focus {
 
 
 .snackbar {
+  box-sizing: content-box;
   margin-bottom: 1rem;
   display: grid;
   place-content: center;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1rem;
+  width: 120%;
   text-align: center;
   color: #fff;
   height: 4rem;
   background: var(--color-dark-red);
   border-radius: 10px;
   transition: all 0.3s;
+
 }
 
 .snackbar--hidden {
