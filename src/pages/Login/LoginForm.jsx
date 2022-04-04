@@ -69,7 +69,7 @@ export class LoginForm extends Component {
     const account = { ...this.state.account };
     console.log("Submitted with", account);
     try {
-      auth.register(account);
+      await auth.register(account);
       this.props.context.setUser({ id: account.unit });
 
       // Go to Dashboard
