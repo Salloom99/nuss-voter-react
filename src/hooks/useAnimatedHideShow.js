@@ -12,7 +12,7 @@ function useAnimatedHideShow(hiddenClass, deleting) {
     setTimeout(() => deleting(), 500);
   };
 
-  const Class = hidden ? ` ${hiddenClass}` : "";
+  const Class = hidden ? hiddenClass : "";
 
   return [Class, handleDelete];
 }

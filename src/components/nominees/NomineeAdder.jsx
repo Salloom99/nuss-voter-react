@@ -9,9 +9,9 @@ export function NomineeAdder(props) {
   };
 
   return (
-    <div className="add-nominee full-width">
+    <div className="manager__header">
       <input
-        className="input control"
+        className="manager__header__input input control"
         type="text"
         placeholder="أدخل اسما لإضافته"
         onChange={props.onInputChange}
@@ -19,7 +19,7 @@ export function NomineeAdder(props) {
         value={props.inputName} />
       <FontAwesomeIcon
         icon={faCirclePlus}
-        className={"fa-3x clickable"}
+        className={"manager__header__btn"}
         onClick={props.onAddClick} />
     </div>
   );

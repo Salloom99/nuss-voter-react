@@ -97,13 +97,13 @@ class NomineesManager extends Component {
     const { nominees, inputName } = this.state;
 
     return (
-      <div className="nominees-manager">
+      <div className="manager flex-col">
         <NomineeAdder
           inputName={inputName}
           onInputChange={this.handleInputChange}
           onAddClick={this.handleNomineeAdd}
         />
-        <ul className="nominees">{this.nomineesComponents(nominees)}</ul>
+        <ul className="manager__list">{this.nomineesComponents(nominees)}</ul>
       </div>
     );
   }

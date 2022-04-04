@@ -10,18 +10,21 @@ import useAnimatedHideShow from "../../hooks/useAnimatedHideShow";
 
 export function Nominee({ id, old, name, onDelete }) {
   const [hiddenClass, handleDelete] = useAnimatedHideShow(
-    "nominee--hidden",
+    "delete",
     () => onDelete(id)
   );
   
   return (
-    <li className={"nominee" + hiddenClass}>
-      <span className="name">{name}</span>
+    <li className={"manager__item grid-card-flow " + hiddenClass}>
+      <span className="manager__item__text">{name}</span>
 
-      <FontAwesomeIcon icon={old ? faCheck : faPenToSquare} />
+      <FontAwesomeIcon 
+        icon={old ? faCheck : faPenToSquare}
+        className="manager__item__btn"
+         />
       <FontAwesomeIcon
         icon={faTrash}
-        className="clickable"
+        className="manager__item__btn clickable"
         onClick={handleDelete}
       />
     </li>
