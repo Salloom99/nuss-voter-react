@@ -31,17 +31,17 @@ function MenuButton(props) {
 const MenuBanner = ({ children, unit }) => {
   return (
     <div className="menu__banner">
+      <span className="menu__title title">{unit}</span>
       {children}
-      <span className="title title--right">{unit}</span>
     </div>
   );
 };
 
 function LinkItem({ text, icon, href }) {
   return (
-    <li>
-      <FontAwesomeIcon icon={icon} style={{ width: "2.5rem" }} />
-      <Link className="menu__item" to={href}>
+    <li className="menu__item">
+      <FontAwesomeIcon className="menu__item__icon" icon={icon} style={{ width: "2.5rem" }} />
+      <Link className="menu__item__link" to={href}>
         {text}
       </Link>
     </li>
@@ -55,9 +55,9 @@ function ButtonItem({ text, icon, onClick }) {
   };
 
   return (
-    <li>
-      <FontAwesomeIcon icon={icon} style={{ width: "2.5rem" }} />
-      <a className="menu__item" href="/none" onClick={handleClick}>
+    <li className="menu__item">
+      <FontAwesomeIcon className="menu__item__icon" icon={icon} style={{ width: "2.5rem" }} />
+      <a className="menu__item__link" href="/none" onClick={handleClick}>
         {text}
       </a>
     </li>
@@ -76,9 +76,7 @@ function State({ value }) {
 
 function MenuList({ children }) {
   return (
-    <div className={`menu__list`}>
-      <ul>{children}</ul>
-    </div>
+      <ul className="menu__list">{children}</ul>
   );
 }
 
