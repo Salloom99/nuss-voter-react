@@ -11,7 +11,7 @@ export function NomineeAdder(props) {
   return (
     <div className="manager__header">
       <input
-        className="manager__header__input input control"
+        className="manager__header__input control nice-text-input"
         type="text"
         placeholder="أدخل اسما لإضافته"
         onChange={props.onInputChange}

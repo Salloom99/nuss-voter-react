@@ -4,7 +4,7 @@ import { getUnitsIn } from "../../services/unitService";
 import { PasswordInput } from "./../../components/common/passwordInput";
 import { Select } from "./../../components/common/select";
 import auth from "../../services/authService";
-import { notify } from './../../components/common/snackbar';
+import { notify } from "./../../components/common/snackbar";
 
 export class LoginForm extends Component {
   constructor() {
@@ -119,18 +119,16 @@ export class LoginForm extends Component {
     const { account, departments, units } = this.state;
     return (
       <div className="form">
-        <span className="title">{"انتخابات الهيئة الطلابية"}</span>
-        <div className="form-group">
-          <form onSubmit={this.handleSubmit}>
-            {this.departmentSelect(account, departments)}
-            {this.unitSelect(account, units)}
-            <PasswordInput
-              value={account.password}
-              onChange={this.handleChange}
-            />
-            <button className="button control clickable">دخول</button>
-          </form>
-        </div>
+        <h1 className="card-title title">{"انتخابات الهيئة الطلابية"}</h1>
+        <form onSubmit={this.handleSubmit}>
+          {this.departmentSelect(account, departments)}
+          {this.unitSelect(account, units)}
+          <PasswordInput
+            value={account.password}
+            onChange={this.handleChange}
+          />
+          <button className="button control mx-auto">دخول</button>
+        </form>
       </div>
     );
   }

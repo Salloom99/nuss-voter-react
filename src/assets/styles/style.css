@@ -245,6 +245,10 @@ body {
 
 /*  Title  */
 
+.card-title {
+  margin-top: 0;
+}
+
 .title {
   display: block;
   text-align: center;
@@ -419,6 +423,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: absolute;
   top: -10%;
   animation: 0.7s ease-out fadeInWithSlide;
@@ -426,6 +431,10 @@ body {
 
 #logo img {
   width: 50%;
+}
+
+.logo__caption {
+  display: none;
 }
 
 
@@ -443,45 +452,50 @@ body {
 
 /* <--------------- Form ---------------> */
 
-.form-group {
+/* 
+.form {
   box-sizing: border-box;
-}
+} */
 
-.form-group form {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.form form {
+  width: 100%;
 }
 
 .full-width {
   width: 100%;
 }
 
+.form__control {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+  background: #dbdbdb;
+  cursor: pointer;
+}
+
 .control {
-  /* margin-top: 2rem; */
   border-radius: 99px;
   font-size: 1.5rem;
   height: 2.5em;
-  border-color: #dbdbdb;
   color: #363636;
+  cursor: pointer;
 }
 
-.control select {
+.form__control select {
+  width: 100%;
   border-radius: 99px;
   border-color: #dbdbdb;
   color: #363636;
   background: #dbdbdb;
 }
 
-.input {
+
+.nice-text-input {
   padding-bottom: calc(0.5em - 1px);
   padding-left: calc(0.75em - 1px);
   padding-right: calc(1.75em - 1px);
   padding-top: calc(0.5em - 1px);
   border: 1px solid #dbdbdb;
-  /* background: #dbdbdb; */
   -webkit-appearance: none;
 }
 
@@ -555,7 +569,14 @@ select:focus, input:focus {
   }
 
   #logo img {
-    width: 80%;
+    width: 70%;
+  }
+
+  .logo__caption {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: serif;
   }
 
   .form {
@@ -564,6 +585,10 @@ select:focus, input:focus {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .card-title {
+    margin-top: 1rem;
   }
 }
 

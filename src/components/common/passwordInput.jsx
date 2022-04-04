@@ -5,7 +5,7 @@ export const PasswordInput = ({ value, onChange }) => {
     <input
       value={value}
       onChange={onChange}
-      className="input full-width control"
+      className="form__control control nice-text-input"
       type="password"
       name="password"
       id="password"
