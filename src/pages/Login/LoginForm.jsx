@@ -120,7 +120,7 @@ export class LoginForm extends Component {
     return (
       <div className="form">
         <h1 className="card-title title">{"انتخابات الهيئة الطلابية"}</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form className="full-width" onSubmit={this.handleSubmit}>
           {this.departmentSelect(account, departments)}
           {this.unitSelect(account, units)}
           <PasswordInput

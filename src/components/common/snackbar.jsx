@@ -5,16 +5,16 @@ export let notify;
 
 function SnackBar({ message, poke }) {
   const [hiddenClass, handleDelete] = useAnimatedHideShow(
-    "snackbar--hidden",
+    "delete",
     poke
   );
 
   useEffect(() => {
     setTimeout(handleDelete, 4000);
-  }, []);
+  }, [handleDelete]);
 
   return (
-    <div className={"snackbar" + hiddenClass}>
+    <div className={"snackbar " + hiddenClass}>
       <p>{message}</p>
     </div>
   );
@@ -44,7 +44,7 @@ class SnackBarStack extends Component {
       <SnackBar key={id} message={message} poke={() => this.removeSnack(id)} />
     ));
     return (
-      <div ref={this.props.ref} className="snackbar-stack snackbar--top">
+      <div ref={this.props.ref} className="snackbar-stack">
         {snackBars}
       </div>
     );

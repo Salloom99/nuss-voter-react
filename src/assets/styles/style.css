@@ -42,23 +42,16 @@ body {
 /*  Container  */
 
 .container-full-height {
-  height: 100vh;
-  box-sizing: border-box;
-}
-
-.container-flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 90vh;
 }
 
 /*  Card  */
 
 .card {
+  position: relative;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-  position: relative;
 }
 
 .card--small {
@@ -68,9 +61,8 @@ body {
 }
 
 .card--full {
-  box-sizing: border-box;
-  margin: 1rem;
-  width: 95vw;
+  margin: 1rem 2rem;
+  width: min(600px, 95vw);
 }
 
 
@@ -225,16 +217,6 @@ body {
   margin-bottom: 1rem;
 }
 
-.hidden {
-  display: none;
-}
-
-
-.delete {
-  margin-bottom: 0 !important;
-  height: 0 !important;
-  opacity: 0 !important;
-}
 
 .fa-circle-check {
   margin: 1rem 0;
@@ -258,7 +240,7 @@ body {
 }
 
 
-/* <--------------- Menu ---------------> */
+/*  Menu  */
 
 .menu__banner {
   margin: 0.5rem 1rem;
@@ -278,13 +260,20 @@ body {
   font-size: 2rem;
   padding: 0;
   margin: 0;
-  margin-right: 1.5rem;
   transition: height 0.5s ease-out;
 }
 
 
+.menu__item {
+  margin: 1.5rem;
+  margin-top: 0;
+}
+
+.menu--collapsed .menu__list {
+  height: 0;
+}
+
 .menu__item__link {
-  margin-right: 1rem;
   text-decoration: none;
   color: #333;
 }
@@ -294,7 +283,7 @@ body {
 }
 
 .menu__item__icon {
-  width: 2rem !important;
+  width: 4rem !important;
   color: var(--color-dark-red);
 }
 
@@ -312,7 +301,7 @@ body {
   padding: 0.3rem 0;
 }
 
-@media screen and (max-width: 375px) {  
+@media (max-width: 375px) {  
   .state {
     position: relative;
     top: 0;
@@ -327,16 +316,6 @@ body {
   }
 
 }
-
-
-.menu__list li {
-  margin: 1.5rem;
-}
-
-.menu--collapsed .menu__list {
-  height: 0;
-}
-
 
 /* <--------------- Table ---------------> */
 
@@ -388,6 +367,13 @@ body {
   padding: 15px;
 }
 
+@media (max-width: 375px) {  
+  
+  .nominees-table .filler {
+    height: 18rem;
+  }
+}
+
 .nominees-table .col-center {
   text-align: center;
 }
@@ -410,14 +396,8 @@ body {
   text-align: center;
 }
 
-@media screen and (max-width: 375px) {  
-  
-  .nominees-table .filler {
-    height: 18rem;
-  }
-}
 
-/* <--------------- Logo ---------------> */
+/*  Logo  */
 
 #logo {
   display: flex;
@@ -450,16 +430,7 @@ body {
   }
 }
 
-/* <--------------- Form ---------------> */
-
-/* 
-.form {
-  box-sizing: border-box;
-} */
-
-.form form {
-  width: 100%;
-}
+/*  Form  */
 
 .full-width {
   width: 100%;
@@ -551,7 +522,7 @@ select:focus, input:focus {
 
 
 
-@media screen and (min-width: 768px) {
+@media (min-width: 768px) {
   body {
     padding: 5rem;
   }
@@ -593,7 +564,7 @@ select:focus, input:focus {
 }
 
 
-/* <--------------- Menu Button ---------------> */
+/*  Menu Button  */
 
 .menu__btn {
   cursor: pointer;
@@ -645,57 +616,6 @@ select:focus, input:focus {
   transform: rotate(45deg) translate(-15px, 2px);
 }
 
-/* <--------------- Add Nominee Bar ---------------> */
-
-.add-nominee {
-  width: 90%;
-  border-radius: 15px;
-  background: var(--color-red);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.add-nominee input {
-  width: 70%;
-  margin: 10px;
-  position: relative;
-  background: #fff;
-}
-
-.add-nominee .fa-circle-plus {
-  color: var(--color-pink);
-}
-
-
-.nominee {
-  display: grid;
-  grid-template-columns: 1fr 4rem 4rem;
-  place-content: center;
-  width: 100%;
-  margin-top: 2rem;
-  height: 4.5rem;
-  border-radius: 10px;
-  background: var(--color-pink);
-  transition: all 0.3s ease-out;
-}
-
-.nominee .name {
-  flex-grow: 8;
-  margin-right: 3rem ;
-  font-size: 1.5rem;
-}
-
-.nominee .svg-inline--fa {
-  font-size: 2rem;
-}
-
-.nominee--hidden {
-  margin-bottom: 0;
-  height: 0;
-  opacity: 0;
-}
-
 /* Snackbar */
 
 .snackbar-stack {
@@ -704,17 +624,11 @@ select:focus, input:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  bottom: 0;
+  top: 0;
   right: 50%;
   transform: translateX(50%);
   margin: 1rem 0;
 }
-
-.snackbar--top{
-  bottom: auto;
-  top: 0;
-}
-
 
 .snackbar {
   box-sizing: content-box;
@@ -732,8 +646,14 @@ select:focus, input:focus {
 
 }
 
-.snackbar--hidden {
-  margin-bottom: 0;
-  height: 0;
-  opacity: 0;
+
+.hidden {
+  display: none;
+}
+
+
+.delete {
+  margin-bottom: 0 ;
+  height: 0 ;
+  opacity: 0 ;
 }
